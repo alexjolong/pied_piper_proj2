@@ -20,3 +20,4 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
       - **Network Adapter:** Enabled
    2. I added a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
    3. In addition, I mounted a shared folder, mounting this repository to a machine folder named "/home/cloudera/share/" with full access for the root user.
+- Steps for loading data
