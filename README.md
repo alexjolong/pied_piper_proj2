@@ -20,4 +20,10 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
       - **Network Adapter:** Enabled
    2. I added a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
    3. In addition, I mounted a shared folder, mounting this repository to a machine folder named "/home/cloudera/share/" with full access for the root user.
-- Steps for loading data
+- Load raw data into HDFS
+   1. In my VM from the cloudera home directory, I now have an attached folder `share/data` which contains the downloaded data files `share/data/salesdb/Customers2.csv`, `share/data/salesdb/Employees2.csv`, etc.
+   2. Use the command `hdfs dfs -mkdir -p ./hadoop/raw_data` to create a hadoop directory (the `-p` command creates the parent directory `hadoop/`)
+   3. Use the command `hdfs dfs -put ./share/data/salesdb/Customers2.csv ./hadoop/raw_data` to put our Customers2.csv file into Hadoop distributed storage.
+   4. Repeat for `Employees2.csv`, `Products.csv`, and `Sales2.csv`
+   5. ![Command line steps to load data](documentation/raw_data_to_hdfs.png)
+- 
