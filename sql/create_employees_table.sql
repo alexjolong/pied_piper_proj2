@@ -1,6 +1,11 @@
 -- Set global variables
 SET VAR:dname=pied_piper_sales_raw;
 
+-- create databases
+
+CREATE DATABASE IF NOT EXISTS ${var:dname}
+COMMENT 'raw sales data';
+
 -- Create Employees Table
 CREATE EXTERNAL TABLE IF NOT EXISTS ${var:dname}.Employees
 (EmployeeID int,
