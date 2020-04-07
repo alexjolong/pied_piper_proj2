@@ -12,9 +12,10 @@ download_data() {
     wget https://csci5751-2020sp.s3-us-west-2.amazonaws.com/sales-data/salesdata.tar.gz
     echo "Sales data retrieved, unzipping..."
     tar -xvzf salesdata.tar.gz
+    rm -f $ext4_data_directory   # possibly clean up from previous groups
     mv salesdb $ext4_data_directory
     echo "Done unzipping, cleaning up..."
-    rm salesdata.tar.gz
+    rm -f salesdata.tar.gz
 }
 
 load_data() {

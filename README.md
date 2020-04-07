@@ -25,5 +25,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    1. In my VM from the cloudera home directory, I now have an attached folder `share/data` which contains the downloaded data files `share/data/salesdb/Customers2.csv`, `share/data/salesdb/Employees2.csv`, etc.
    2. Run the bash script `/scripts/raw_data_into_hdfs.sh` to create hdfs folders for the raw data, and to move raw files into those folders.
 - Create an Impala sales database
-   1. From the terminal, run this command `impala-shell --query_file "./share/scripts/create_employees_table.sql"`
-      - This will execute the SQL query in the file "create employees table.txt", which creates the employees table according to the schema defined in the project instructions.
+   1. From within the shared directory, run this command `bash ./bash/deploy-proj2.sh -d`
+      - The `-d` option downloads the dataset from AWS, unzips it, and stores it in the local filesystem.
+   2. Then, run `bash ./bash/deploy-proj2.sh -l`
+      - The `-l` option loads the raw data from the linux ext4 file system into Hadoop Distributed Filesystem.
