@@ -10,7 +10,7 @@ option=$1  # first argument passed, if any
 # TODO: If file already exists, produce warning at this step
 download_data() {
     echo "Getting sales data from AWS..."
-    wget https://csci5751-2020sp.s3-us-west-2.amazonaws.com/sales-data/salesdata.tar.gz
+    sudo wget https://csci5751-2020sp.s3-us-west-2.amazonaws.com/sales-data/salesdata.tar.gz
     echo "Sales data retrieved, unzipping..."
     tar -xvzf salesdata.tar.gz
     rm -r -f $ext4_data_directory   # possibly clean up from previous groups
