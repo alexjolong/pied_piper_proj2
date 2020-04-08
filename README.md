@@ -10,7 +10,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    - Sam Bloomquist [(bloom246)](mailto:bloom246@umn.edu)
    - Stepan Subbotin [(subbo001)](mailto:subbo001@umn.edu)
 
-# Deliverable 2:
+# Setup:
 - Steps for setting up Cloudera environment:
    1. Followed along with "Cloudera VM Download and SetUp Notes", installed VirtualBox and downloaded cloudera-quickstart-vm-5.13.0.0. Booted virtual disk with the following settings (note my base machine is Windows 10 Education, patch 1909, with intel i7 4-core and 16GB RAM. I turned Hyper-V off for this project.)
       - **OS:** Red Hat Linux (64-bit) v6.7
@@ -21,9 +21,19 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    2. I added a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
    3. In addition, I mounted a shared folder, mounting this repository to a machine folder named "/home/cloudera/share/" with full access for the root user. This should be equivalent to an infrastructure team cloning this repo there. 
       - For me, this command is `sudo mount -t vboxsf pied_piper_proj2 share`, but this will differ depending on your file system.
-- Load raw data into HDFS (note - make sure that quickstart.cloudera service is running - go to a browser and login to clouder manager, and restart the cloudera quickstart cluster)
-   1. In my VM from the cloudera home directory, I now have an attached folder `share/data` which contains the downloaded data files `share/data/salesdb/Customers2.csv`, `share/data/salesdb/Employees2.csv`, etc.
-   2. Run the bash script `/scripts/raw_data_into_hdfs.sh` to create hdfs folders for the raw data, and to move raw files into those folders.
-- Create an Impala sales database
-   1. From the terminal, run this command `impala-shell --query_file "./share/scripts/create_employees_table.sql"`
-      - This will execute the SQL query in the file "create employees table.txt", which creates the employees table according to the schema defined in the project instructions.
+      - Alternatively, you can `git clone https://github.umn.edu/longx552/pied_piper_proj2.git`, and the directory will be named 'pied_piper_proj2'
+
+# Running
+- To run deliverable 2, open a terminal from the project directory (the same location as this file) and enter the command `bash ./bash/deploy-proj2.sh --do_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
+   1. `bash ./bash/deploy-proj2.sh --download_data`: Downloads data from AWS
+   2. `bash ./bash/deploy-proj2.sh --load_data`: Loads the data from Linux's ext4 file system to HDFS
+   3. `bash ./bash/deploy-proj2.sh --create_raw_tables`: Creates external table views around the files in HDFS which can be queried from Impala.
+- To clean deliverable 2, run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
+   1. `bash ./bash/deploy-proj2.sh --do_deliverable_2`
+
+# Data Integrity
+- One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
+TODO: "Do quality analysis on the data, if you find any issues, document the issues in your ReadME
+
+# Partitioning Performance
+TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?

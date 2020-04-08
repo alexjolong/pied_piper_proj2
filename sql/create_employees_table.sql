@@ -16,7 +16,7 @@ Region varchar)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 STORED AS TEXTFILE
-LOCATION '/user/hive/warehouse/raw_data/Employees/'
+LOCATION '/data/Employees/'
 TBLPROPERTIES("skip.header.line.count"="1");
 
 -- Reset metadata for table

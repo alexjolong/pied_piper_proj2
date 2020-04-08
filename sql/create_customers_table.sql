@@ -11,9 +11,9 @@ FirstName VARCHAR,
 MiddleInit VARCHAR,
 LastName VARCHAR)
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY '|'
 STORED AS TEXTFILE
-LOCATION '/user/hive/warehouse/raw_data/Customers/'
+LOCATION '/data/Customers/'
 TBLPROPERTIES("skip.header.line.count"="1");
 
 -- reset metadata for table
