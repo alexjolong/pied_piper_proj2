@@ -21,7 +21,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    2. I added a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
    3. In addition, I mounted a shared folder, mounting this repository to a machine folder named "/home/cloudera/share/" with full access for the root user. This should be equivalent to an infrastructure team cloning this repo there. 
       - For me, this command is `sudo mount -t vboxsf pied_piper_proj2 share`, but this will differ depending on your file system.
-      - Alternatively, you can `git clone https://github.umn.edu/longx552/pied_piper_proj2.git`, and the directory will be named 'pied_piper_proj2'
+      - Alternatively, you can `git clone https://github.umn.edu/longx552/pied_piper_proj2.git`, and the directory will be named 'pied_piper_proj2'. Note that the version of git which comes packaged in Cloudera is 1.7.1, which does not support command-line credential passing, as is likely needed for UMN's enterprise github. Update git with `sudo yum update git` before cloning.
 
 # Running
 - To run deliverable 2, open a terminal from the project directory (the same location as this file) and enter the command `bash ./bash/deploy-proj2.sh --do_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
@@ -34,6 +34,10 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
 # Data Integrity
 - One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
 TODO: "Do quality analysis on the data, if you find any issues, document the issues in your ReadME
+- Analysis of Customer file:
+   - Distinct customer IDs: 19,759 , number of rows: 19,760. There are two instances of one of the same record. This turns out to be CustomerID 17,829: Stefanie Smith
+   - Customer IDs range from 1 to 19579, as expected.
+   - 
 
 # Partitioning Performance
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
