@@ -33,7 +33,6 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
 
 # Data Integrity
 - One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
-TODO: "Do quality analysis on the data, if you find any issues, document the issues in your ReadME
 - Analysis of Customer file:
    - Distinct customer IDs: 19,759 , number of rows: 19,760. There are two instances of one of the same record. This turns out to be CustomerID 17,829: Stefanie Smith
    - Customer IDs range from 1 to 19579, as expected.
@@ -41,7 +40,12 @@ TODO: "Do quality analysis on the data, if you find any issues, document the iss
    - The same process for last names reveals 89 non-simple last names, but no invalid or missing last names.
    - There are 8,334 records with blank middle initials. 11,426 have alphabetical middle initials, and none have any invalid middle initials. No problems here.
 - Analysis of Employees file:
-   - 
+   - Distinct employee IDs: 23, number of rows: 23. Employee IDs range from 1 to 23, no problems here.
+   - There are no invalid first or last names (not starting with alphabetic), although there are three last names which have a non-alphabetic character such as "Blotchet-Halls". There is one employee with an invalid middle initial "'". We will set this to an empty string.
+   - There are 5 regions - North, South, West, East, and east, with 4 employees in east and 3 in East. We will combine these by setting all values of east to East.
+- Analysis of Products file:
+- Analysis of Sales file:
+
 
 # Partitioning Performance
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?

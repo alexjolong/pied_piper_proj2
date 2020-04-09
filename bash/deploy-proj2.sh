@@ -53,18 +53,31 @@ create_raw_tables() {
     echo "Done!"
 }
 
+create_parquet_tables() {
+    echo "Creating Sales Database containing Parquet tables by selecting from external table views on raw data"
+    impala-shell -f "$sql_script_directory"/create_sales_db.sql
+    echo "Done!"
+}
+
 drop_raw_database() {
     echo "Dropping raw database and cascading to drop all external table views on raw data"
     impala-shell -q "DROP DATABASE IF EXISTS pied_piper_sales_raw CASCADE;"
+}
+
+drop_sales_database() {
+    echo "Dropping Sales DB and cascading to drop parquet tables"
+    impala-shell -q "DROP DATABASE IF EXISTS pied_piper_sales CASCADE;"
 }
 
 do_deliverable_2() {
     download_data
     load_data
     create_raw_tables
+    create_parquet_tables
 }
 
 clean_deliverable_2() {
+    drop_sales_database
     drop_raw_database
     delete_hdfs_raw_data
 }
@@ -86,12 +99,20 @@ while [ $option_count -eq 0 ]; do
             create_raw_tables
             ;;
 
+        -cp | --create_parquet_tables)
+            create_parquet_tables
+            ;;
+
         -dh | --delete_hdfs_raw)
             delete_hdfs_raw_data
             ;;
 
         -dr | --drop_raw_database)
             drop_raw_database
+            ;;
+
+        -ds | drop_sales_database)
+            drop_sales_database
             ;;
 
         -d2 | --do_deliverable_2)
