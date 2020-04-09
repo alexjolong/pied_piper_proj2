@@ -37,6 +37,10 @@ TODO: "Do quality analysis on the data, if you find any issues, document the iss
 - Analysis of Customer file:
    - Distinct customer IDs: 19,759 , number of rows: 19,760. There are two instances of one of the same record. This turns out to be CustomerID 17,829: Stefanie Smith
    - Customer IDs range from 1 to 19579, as expected.
+   - We look for any first or last names that are invalid names (don't start with an alphabetical). There aren't any, but there are 49 names with letters not in the simple alphabet set [a-zA-Z]. For example "Jésus", "Yao-Qiang", and "Ty Loren". These all look like valid names, so we see no problems here.
+   - The same process for last names reveals 89 non-simple last names, but no invalid or missing last names.
+   - There are 8,334 records with blank middle initials. 11,426 have alphabetical middle initials, and none have any invalid middle initials. No problems here.
+- Analysis of Employees file:
    - 
 
 # Partitioning Performance

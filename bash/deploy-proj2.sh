@@ -12,11 +12,11 @@ download_data() {
     echo "Getting sales data from AWS..."
     sudo wget https://csci5751-2020sp.s3-us-west-2.amazonaws.com/sales-data/salesdata.tar.gz
     echo "Sales data retrieved, unzipping..."
-    tar -xvzf salesdata.tar.gz
-    rm -r -f $ext4_data_directory   # possibly clean up from previous groups
-    mv salesdb $ext4_data_directory
+    sudo tar -xvzf salesdata.tar.gz
+    sudo rm -r -f $ext4_data_directory   # possibly clean up from previous groups
+    sudo mv salesdb $ext4_data_directory
     echo "Done unzipping, cleaning up..."
-    rm -f salesdata.tar.gz
+    sudo rm -f salesdata.tar.gz
 }
 
 load_data() {
@@ -36,7 +36,7 @@ load_data() {
     sudo -u hdfs hdfs dfs -chown -R hive:impala $hdfs_data_directory
 
     echo "Cleaning up"
-    rm -r -f $ext4_data_directory/
+    sudo rm -r -f $ext4_data_directory/
 }
 
 delete_hdfs_raw_data() {

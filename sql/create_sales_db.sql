@@ -8,12 +8,13 @@ COMMENT 'Parquet Sales Data imported from raw tables';
 ------------------------
 -- create parquet tables
 ------------------------
-
+-- remove one duplicate customer record from raw table
 CREATE EXTERNAL TABLE IF NOT EXISTS ${var:dname}.Customers
 COMMENT 'Parquet Customers table'
 STORED AS Parquet
 AS
-SELECT * FROM ${var:source_dname}.Customers;
+SELECT DISTINCT customerid, firstname, middleinit, lastname
+FROM ${var:source_dname}.Customers;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS ${var:dname}.Employees
 COMMENT 'Parquet Employees table'
