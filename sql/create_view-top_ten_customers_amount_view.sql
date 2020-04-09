@@ -28,7 +28,8 @@ join
     join ${var:database_name}.products p
     on (s.productid = p.productid)
     group by s.customerid
-    order by sum(p.price) desc
-    limit 10
+    
 ) a
-on (c.customerid = a.customerid);
+on (c.customerid = a.customerid)
+order by a.total_lifetime_purchases desc
+limit 10;
