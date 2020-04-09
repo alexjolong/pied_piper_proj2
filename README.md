@@ -35,16 +35,26 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
 - One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
 - Analysis of Customer file:
    - Distinct customer IDs: 19,759 , number of rows: 19,760. There are two instances of one of the same record. This turns out to be CustomerID 17,829: Stefanie Smith
-   - Customer IDs range from 1 to 19579, as expected.
+   - Customer IDs range from 1 to 19759, as expected.
    - We look for any first or last names that are invalid names (don't start with an alphabetical). There aren't any, but there are 49 names with letters not in the simple alphabet set [a-zA-Z]. For example "Jésus", "Yao-Qiang", and "Ty Loren". These all look like valid names, so we see no problems here.
    - The same process for last names reveals 89 non-simple last names, but no invalid or missing last names.
    - There are 8,334 records with blank middle initials. 11,426 have alphabetical middle initials, and none have any invalid middle initials. No problems here.
 - Analysis of Employees file:
    - Distinct employee IDs: 23, number of rows: 23. Employee IDs range from 1 to 23, no problems here.
-   - There are no invalid first or last names (not starting with alphabetic), although there are three last names which have a non-alphabetic character such as "Blotchet-Halls". There is one employee with an invalid middle initial "'". We will set this to an empty string.
+   - There are no invalid first or last names (not starting with alphabetic), although there are three last names which have a non-alphabetic character such as "Blotchet-Halls". There is one employee with an invalid middle initial " ' ". We will set this to an empty string.
    - There are 5 regions - North, South, West, East, and east, with 4 employees in east and 3 in East. We will combine these by setting all values of east to East.
-- Analysis of Products file:
+- Analysis of Products file: 
+   - Distinct product IDs: 504, number of rows: 504. There were no duplicate productIDs or names in the raw data
+   - When loading data from the csv file into the raw table, Impala was unable to do a cast from string to decimal for the Price column. This required us to make the Price column a Float type. When creating the managed table, we successfully cast the float values into decimals precise to the hundredths place (emulating cents in a dollar amount).
+   - There are 274 product names with at least one occurance of non alphanumeric characters. In all cases, they were "-", ",", "/", or " ' ". These are valid characters to be in a product name so we have left them as is in the managed table.
+  
 - Analysis of Sales file:
+   - 6,715,221 distinct rows
+   - 23 sales person ids, ranging from 1 to 23, this corresponds to the 23 employee ids in the employees table. 
+   - There are 567 distinct customer ids present, which correspond to customer ids in the customer table. This means that of the 19,759 customers in the customers table, only 567 of them have purchased products. The ids range from 1 to 19,680. 
+   - All 504 products from the product table are present in this table as well, under the productid column. 
+   - The quantity of items in a sale range from 1-1042. There are no negative numbers or nonnumeric characters. 
+
 
 
 # Partitioning Performance
