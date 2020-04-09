@@ -19,7 +19,7 @@ c.customerid as customerid
 ,c.firstname as firstname
 ,year(a.`date`) as year 
 ,month(a.`date`) as month 
-,sum(DISTINCT a.productid) as total_products
+,count(DISTINCT a.productid) as total_products
 From ${var:database_name}.customers c 
 join
 (
