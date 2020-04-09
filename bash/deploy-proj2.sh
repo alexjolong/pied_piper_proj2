@@ -59,6 +59,13 @@ create_parquet_tables() {
     echo "Done!"
 }
 
+create_views() {
+    echo "Creating customer monthly sales view and top ten customers view"
+    impala-shell -f "$sql_script_directory"/create_view-customer_monthly_sales_2019_view.sql
+    impala-shell -f "$sql_script_directory"/create_view-top_ten_customers_amount_view.sql
+    echo "Done!"
+}
+
 drop_raw_database() {
     echo "Dropping raw database and cascading to drop all external table views on raw data"
     impala-shell -q "DROP DATABASE IF EXISTS pied_piper_sales_raw CASCADE;"
@@ -101,6 +108,9 @@ while [ $option_count -eq 0 ]; do
 
         -cp | --create_parquet_tables)
             create_parquet_tables
+            ;;
+        -cv | --create_views)
+            create_views
             ;;
 
         -dh | --delete_hdfs_raw)
