@@ -19,7 +19,7 @@ join
 (
     Select 
         s.customerid
-        ,sum(CAST(p.price * s.quantity) AS FLOAT) as total_lifetime_purchases
+        ,sum(p.price * s.quantity) as total_lifetime_purchases
     From ${var:database_name}.sales s
     JOIN ${var:database_name}.products p
     ON (s.productid = p.productid)

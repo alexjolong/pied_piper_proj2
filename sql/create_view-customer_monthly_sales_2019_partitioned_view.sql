@@ -15,7 +15,7 @@ SELECT
     ,c.firstname as firstname
     ,year(p.order_date) as year
     ,month(p.order_date) as month
-    ,sum(CAST(p.product_price * p.quantity) AS FLOAT) as total_purchase_amount
+    ,sum(p.product_price * p.quantity) as total_purchase_amount
 FROM ${var:database_name}.product_sales_partition p
 JOIN ${var:database_name}.customers c 
 ON (p.customer_id = c.customerid)

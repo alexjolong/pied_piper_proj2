@@ -15,7 +15,7 @@ c.customerid as customerid
 ,c.firstname as firstname
 ,year(a.`date`) as year 
 ,month(a.`date`) as month 
-,sum(CAST(a.price * a.quantity) AS FLOAT) as total_purchase_amount
+,sum(a.price * a.quantity) as total_purchase_amount
 From ${var:database_name}.customers c 
 join
 (
