@@ -59,6 +59,10 @@ load_data() {
     echo "Make Impala/Hive the owner of our raw data in HDFS"
     sudo -u hdfs hdfs dfs -chown -R hive:impala $hdfs_data_directory
 
+    echo "Making HDFS directory for Impala so that Parquet files can be deleted"
+    sudo -u hdfs hdfs dfs -mkdir -p /user/impala
+    sudo -u hdfs hdfs dfs -chown -R impala:impala /user/impala
+
     echo "Cleaning up"
     sudo rm -r -f $ext4_data_directory/
 }
