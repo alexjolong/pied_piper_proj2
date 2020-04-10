@@ -47,7 +47,6 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    - Distinct product IDs: 504, number of rows: 504. There were no duplicate productIDs or names in the raw data
    - When loading data from the csv file into the raw table, Impala was unable to do a cast from string to decimal for the Price column. This required us to make the Price column a Float type. When creating the managed table, we successfully cast the float values into decimals precise to the hundredths place (emulating cents in a dollar amount).
    - There are 274 product names with at least one occurance of non alphanumeric characters. In all cases, they were "-", ",", "/", or " ' ". These are valid characters to be in a product name so we have left them as is in the managed table.
-  
 - Analysis of Sales file:
    - 6,715,221 distinct rows
    - 23 sales person ids, ranging from 1 to 23, this corresponds to the 23 employee ids in the employees table. 

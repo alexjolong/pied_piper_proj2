@@ -3,7 +3,7 @@ SET VAR:database_name=pied_piper_sales;
 
 --create view customer_monthly_sales_2019_view on pied_piper_sales Data
 
---View: customer_monthly_sales_2019_view
+--View: customer_monthly_sales_2019_partitioned_view
 --Customer id, customer last name, customer first name,
 --year, month, aggregate total amount
 --of all products purchased by month for 2019.
