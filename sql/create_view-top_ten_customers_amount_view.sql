@@ -18,13 +18,12 @@ From ${var:database_name}.customers c
 join
 (
     Select 
-    s.customerid
-    ,sum(p.price) as total_lifetime_purchases
+        s.customerid
+        ,sum(CAST(p.price * s.quantity) AS FLOAT) as total_lifetime_purchases
     From ${var:database_name}.sales s
-    join ${var:database_name}.products p
-    on (s.productid = p.productid)
-    group by s.customerid
-    
+    JOIN ${var:database_name}.products p
+    ON (s.productid = p.productid)
+    GROUP BY s.customerid
 ) a
 on (c.customerid = a.customerid)
 order by a.total_lifetime_purchases desc

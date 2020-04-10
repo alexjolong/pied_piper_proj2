@@ -65,7 +65,7 @@ load_data() {
 
 delete_hdfs_raw_data() {
     echo "Deleting raw sales data files from HDFS"
-    sudo -u hdfs hdfs dfs -rm -r $hdfs_data_directory
+    sudo -u hdfs hdfs dfs -rmr $hdfs_data_directory
 }
 
 create_raw_tables() {
