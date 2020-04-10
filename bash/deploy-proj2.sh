@@ -7,6 +7,28 @@ sql_script_directory=./sql
 option_count=0
 option=$1  # first argument passed, if any
 
+
+
+## Displays all function call options when you call "bash ./bash/deploy-proj2.sh -h"  
+display_help() {
+    echo "Usage: $) [option...] " >&2
+    echo
+    echo "  -h, --help          display help contents"
+    echo "  -d, --download_data     get data from url and unzip it locally"
+    echo "  -l, --load_data          load data to hdfs and delete local data"
+    echo "  -cr, --create_raw_tables      create impala external table views on raw sales data"
+    echo "  -cp, --create_parquet_tables    create sales database containing parquet tables"
+    echo "  -cv, --create_views     create views customer_monthly_sales_2019_view & top_ten_customers_amount_view"
+    echo "  -dh, --delete_hdfs_raw      delete raw sales data files from HDFS"
+    echo "  -dr, --drop_raw_database      drop raw database and cascading to drop all external table views on raw data"
+    echo "  -ds, --drop_sales_database      drop sales DB and cascading to drop parquet tables"
+    echo "  -dv, --drop_views       drop views customer_monthly_sales_2019_view  &  top_ten_customers_amount_view"
+    echo "  -d2, --do_deliverable_2      To run deliverable 2"
+    echo "  -c2, --clean_deliverable_2      To clean deliverable 2 (delete all data)"
+    exit 1
+}
+
+
 # TODO: If file already exists, produce warning at this step
 download_data() {
     echo "Getting sales data from AWS..."
@@ -76,6 +98,13 @@ drop_sales_database() {
     impala-shell -q "DROP DATABASE IF EXISTS pied_piper_sales CASCADE;"
 }
 
+drop_views() {
+    echo "Dropping both views (pied_piper_sales) customer_monthly_sales_2019_view  &  top_ten_customers_amount_view"
+    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.customer_monthly_sales_2019_view;"
+    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.top_ten_customers_amount_view;"
+    echo "Done!"
+}
+
 do_deliverable_2() {
     download_data
     load_data
@@ -94,6 +123,10 @@ while [ $option_count -eq 0 ]; do
     option_count=$(( option_count + 1 ))
 
     case $option in
+        -h | --help)
+            display_help
+            ;;
+        
         -d | --download_data)
             download_data
             ;;
@@ -121,8 +154,12 @@ while [ $option_count -eq 0 ]; do
             drop_raw_database
             ;;
 
-        -ds | drop_sales_database)
+        -ds | --drop_sales_database)
             drop_sales_database
+            ;;
+
+        -dv | --drop_views)
+            drop_views
             ;;
 
         -d2 | --do_deliverable_2)
