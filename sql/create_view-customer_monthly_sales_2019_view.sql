@@ -15,18 +15,18 @@ c.customerid as customerid
 ,c.firstname as firstname
 ,year(a.`date`) as year 
 ,month(a.`date`) as month 
-,count(DISTINCT a.productid) as total_products
+,sum(a.price) as total_purchase_amount
 From ${var:database_name}.customers c 
 join
 (
     Select 
     s.customerid
     ,s.`date`
-    ,p.productid
+    ,p.price
     From ${var:database_name}.sales s
     join ${var:database_name}.products p
     on (s.productid = p.productid)
-    where s.`date` between '2019-01-01 00:00:00' AND '2019-12-31 23:59:59'
+    where s.`date` between '2019-01-01 00:00:00' AND '2019-12-31 23:59:59' -- bounds are inclusive
 ) a
 on (c.customerid = a.customerid)
 group by 

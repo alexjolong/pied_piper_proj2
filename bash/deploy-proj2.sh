@@ -130,6 +130,7 @@ do_deliverable_2() {
     load_data
     create_raw_tables
     create_parquet_tables
+    create_views
 }
 
 clean_deliverable_2() {
