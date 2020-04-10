@@ -19,10 +19,12 @@ display_help() {
     echo "  -cr, --create_raw_tables      create impala external table views on raw sales data"
     echo "  -cp, --create_parquet_tables    create sales database containing parquet tables"
     echo "  -cv, --create_views     create views customer_monthly_sales_2019_view & top_ten_customers_amount_view"
+    echo "  -cpart, --create_partitions     create partition tables and views for Deliverable 3"
     echo "  -dh, --delete_hdfs_raw      delete raw sales data files from HDFS"
     echo "  -dr, --drop_raw_database      drop raw database and cascading to drop all external table views on raw data"
     echo "  -ds, --drop_sales_database      drop sales DB and cascading to drop parquet tables"
     echo "  -dv, --drop_views       drop views customer_monthly_sales_2019_view  &  top_ten_customers_amount_view"
+    echo "  -dp, --drop_partitions      drop the partition tables and views from Deliverable 3"
     echo "  -d2, --do_deliverable_2      To run deliverable 2"
     echo "  -c2, --clean_deliverable_2      To clean deliverable 2 (delete all data)"
     exit 1
@@ -88,6 +90,13 @@ create_views() {
     echo "Done!"
 }
 
+## TODO: create sql calls for partition tables/views customer_monthly_sales_2019_partitioned_view AND product_region_sales_partition 
+create_partitions() {
+    echo "Creating partition tables and views for Deliverable 3"
+    impala-shell -f "$sql_script_directory"/create_parition-product_sales_partition.sql
+    echo "Done!"
+}
+
 drop_raw_database() {
     echo "Dropping raw database and cascading to drop all external table views on raw data"
     impala-shell -q "DROP DATABASE IF EXISTS pied_piper_sales_raw CASCADE;"
@@ -104,6 +113,16 @@ drop_views() {
     impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.top_ten_customers_amount_view;"
     echo "Done!"
 }
+
+drop_partitions() {
+    echo "Dropping the partition tables and views from Deliverable 3"
+    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.product_sales_partition;"
+    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.customer_monthly_sales_2019_partitioned_view;"
+    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.product_region_sales_partition;"
+    echo "Done!"
+}
+
+
 
 do_deliverable_2() {
     download_data
@@ -146,6 +165,10 @@ while [ $option_count -eq 0 ]; do
             create_views
             ;;
 
+        -cpart | --create_partitions)
+            create_partitions
+            ;;
+
         -dh | --delete_hdfs_raw)
             delete_hdfs_raw_data
             ;;
@@ -160,6 +183,10 @@ while [ $option_count -eq 0 ]; do
 
         -dv | --drop_views)
             drop_views
+            ;;
+        
+        -dp | --drop_partitions)
+            drop_partitions
             ;;
 
         -d2 | --do_deliverable_2)
