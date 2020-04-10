@@ -8,27 +8,27 @@ SET VAR:database_name=pied_piper_sales;
     -- Quantity, Total Sales Amount, Order Date, Region, Sales Year, Sales Month
 
 CREATE TABLE IF NOT EXISTS ${var:database_name}.product_region_sales_partition
-PARTITIONED BY (region, sales_year , sales_month) 
+PARTITIONED BY (region, sales_year, sales_month) 
 COMMENT 'Impala Parquet product and sales materialized table that is partitioned by sales_year and sales_month'
 AS
 Select 
-s.orderid as order_id
-,s.salespersonid as salesperson_id
-,s.customerid as customer_id
-,p.productid as product_id
-,p.name as product_name
-,p.price as product_price
-,s.quantity as quantity
-,CAST((p.price * s.quantity) as FLOAT) as total_sales_amount
-,s.`date` as order_date
-,e.region as region
-,year(s.`date`) as sales_year 
-,month(s.`date`) as sales_month 
+   s.orderid as order_id
+   ,s.salespersonid as salesperson_id
+   ,s.customerid as customer_id
+   ,p.productid as product_id
+   ,p.name as product_name
+   ,p.price as product_price
+   ,s.quantity as quantity
+   ,CAST((p.price * s.quantity) as FLOAT) as total_sales_amount
+   ,s.`date` as order_date
+   ,e.region as region
+   ,year(s.`date`) as sales_year 
+   ,month(s.`date`) as sales_month 
 From ${var:database_name}.sales s
-join ${var:database_name}.products p
-on (s.productid = p.productid)
-join ${var:database_name}.employees e
-on (s.salespersonid = e.employeeid)
+JOIN ${var:database_name}.products p
+ON (s.productid = p.productid)
+JOIN ${var:database_name}.employees e
+ON (s.salespersonid = e.employeeid)
 ; --Create the table from the query statement here
 
 
