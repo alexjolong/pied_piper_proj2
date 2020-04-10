@@ -1,10 +1,6 @@
 -- set global variables
 SET VAR:database_name=pied_piper_sales;
 
-
--- drop the view top_ten_customers_amount_view (if we need to revise)
--- DROP VIEW ${var:database_name}.top_ten_customers_amount_view;
-
 --create view top_ten_customers_amount_view on pied_piper_sales Data
 
 -- View: top_ten_customers_amount_view 
