@@ -23,7 +23,7 @@ join
     s.customerid
     ,s.`date`
     ,p.price
-    ,p.quantity
+    ,s.quantity
     From ${var:database_name}.sales s
     join ${var:database_name}.products p
     on (s.productid = p.productid)
