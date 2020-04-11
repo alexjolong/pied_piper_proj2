@@ -96,9 +96,9 @@ create_views() {
 
 create_partitions() {
     echo "Creating partition tables and views for Deliverable 3"
-    impala-shell -f "$sql_script_directory"/create_parition-product_sales_partition.sql
+    impala-shell -f "$sql_script_directory"/create_partition-product_sales_partition.sql
     impala-shell -f "$sql_script_directory"/create_view-customer_monthly_sales_2019_partitioned_view.sql
-    impala-shell -f "$sql_script_directory"/create_parition-product_region_sales_partition.sql
+    impala-shell -f "$sql_script_directory"/create_partition-product_region_sales_partition.sql
     echo "Done!"
 }
 
