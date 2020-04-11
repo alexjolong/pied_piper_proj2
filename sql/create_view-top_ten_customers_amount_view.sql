@@ -28,7 +28,3 @@ join
 on (c.customerid = a.customerid)
 order by a.total_lifetime_purchases desc
 limit 10;
-
--- reset metadata for view
-invalidate metadata;
-compute stats ${var:database_name}.top_ten_customers_amount_view;
