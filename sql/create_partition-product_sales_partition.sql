@@ -29,6 +29,6 @@ ON (s.productid = p.productid)
 ; --Create the table from the query statement here
 
 
-
+-- reset metadata for table
 invalidate metadata;
 compute stats ${var:database_name}.product_sales_partition;
