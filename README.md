@@ -11,19 +11,15 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    - Stepan Subbotin [(subbo001)](mailto:subbo001@umn.edu)
 
 # Setup:
-- Steps for setting up Cloudera environment:
-   1. Followed along with "Cloudera VM Download and SetUp Notes", installed VirtualBox and downloaded cloudera-quickstart-vm-5.13.0.0. Booted virtual disk with the following settings (note my base machine is Windows 10 Education, patch 1909, with intel i7 4-core and 16GB RAM. I turned Hyper-V off for this project.)
+- This project is meant to be deployed within a Cloudera environment. Here are the steps we followed, which you can replicate.
+   1. Install VirtualBox and download cloudera-quickstart-vm-5.13.0.0. Boot virtual disk with the following settings (note my base machine is Windows 10 Education, patch 1909, with intel i7 4-core and 16GB RAM. I turned Hyper-V off for this project.)
       - **OS:** Red Hat Linux (64-bit) v6.7
       - **CPUs:** 3
       - **Base Memory:** 10736 MB
       - **Video Memory:** 16 MB
       - **Network Adapter:** Enabled
-   2. I added a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
-   3. In addition, I mounted a shared folder, mounting this repository to a machine folder named "/home/cloudera/share/" with full access for the root user. This should be equivalent to an infrastructure team cloning this repo there. 
-      - For me, this command is `sudo mount -t vboxsf pied_piper_proj2 share`, but this will differ depending on your file system.
-      - Alternatively, you can `git clone https://github.umn.edu/longx552/pied_piper_proj2.git`, and the directory will be named 'pied_piper_proj2'. Note that the version of git which comes packaged in Cloudera is 1.7.1, which does not support command-line credential passing, as is likely needed for UMN's enterprise github. Update git with `sudo yum update git` before cloning.
-
-# Running
+   2. Add a TCP port-forwarding rule as per the instructions, from host port 2222 to guest port 22
+- Once your virtual machine is set up, you can clone this repo with the command `git clone https://github.com/alexjolong/pied_piper_proj2.git`. The resulting directory will be named 'pied_piper_proj2'.
 - To run deliverable 2, open a terminal from the project directory (the same location as this file) and enter the command `bash ./bash/deploy-proj2.sh --do_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
    1. `bash ./bash/deploy-proj2.sh --download_data`: Downloads data from AWS
    2. `bash ./bash/deploy-proj2.sh --load_data`: Loads the data from Linux's ext4 file system to HDFS
@@ -32,6 +28,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    1. `bash ./bash/deploy-proj2.sh --do_deliverable_2`
 
 # Data Integrity
+We analyzed the raw sales data to discover any data cleanliness issues. Here are our findings:
 - One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
 - Analysis of Customer file:
    - Distinct customer IDs: 19,759 , number of rows: 19,760. There are two instances of one of the same record. This turns out to be CustomerID 17,829: Stefanie Smith
@@ -54,7 +51,9 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    - All 504 products from the product table are present in this table as well, under the productid column. 
    - The quantity of items in a sale range from 1-1042. There are no negative numbers or nonnumeric characters. 
 
-
+In addition, we noticed that some customers were making many very large orders. The customer with the largest total sales purchased over $70 Billion worth of product, so we wanted to investigate further. We found that top customers such as Customer ID 5040 frequently submitted identical orders closely together (within hours or minutes). 
+![Most expensive single-item purchases by customer 5040](/documentation/biggest_item_purchases_5040.png)
+Since these orders came in at different times and with separate order IDs, we have to assume they are valid. However, this could potentially be a problem with the order entry system allowing multiple entries of the same order (i.e. the user may have pressed "send" multiple times on the same order!). We would encourage our business partners to look into this.
 
 # Partitioning Performance
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
