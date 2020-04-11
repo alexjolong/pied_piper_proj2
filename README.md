@@ -32,6 +32,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    3. `product_region_sales_partition`
 - To clean deliverable 3, if you are just wanting to drop all the partition tables/views, run the command `bash ./bash/deploy-proj2.sh --drop_partitions`. 
    1. However, if you are doing a full data deletion and reload into the system, which includes deleting all the tables and views for deliverable 2 and deliverable 3, you can simply run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2` because `--clean_deliverable_2` drops the sales db which drops all the views and tables contained in the db. 
+- Need help or need to see all function call options if you are desiring individual functon calls for certain operations (without having to look at the code), run the command `bash ./bash/deploy-proj2.sh -h` or `bash ./bash/deploy-proj2.sh --help` to display the contents, function call options, and a short description of each function call purpose.
    
 # Data Integrity
 We analyzed the raw sales data to discover any data cleanliness issues. Here are our findings:
