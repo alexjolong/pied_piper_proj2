@@ -1,7 +1,7 @@
 # pied_piper_proj2
 Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
 
-# Deliverable 1:
+# Deliverable 1
 - **Team name:** Pied Piper
 - **Slack channel name:** pied_piper
 - **Team Members:**
@@ -10,7 +10,7 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    - Sam Bloomquist [(bloom246)](mailto:bloom246@umn.edu)
    - Stepan Subbotin [(subbo001)](mailto:subbo001@umn.edu)
 
-# Setup:
+# Setup and Running
 - This project is meant to be deployed within a Cloudera environment. Here are the steps we followed, which you can replicate.
    1. Install VirtualBox and download cloudera-quickstart-vm-5.13.0.0. Boot virtual disk with the following settings (note my base machine is Windows 10 Education, patch 1909, with intel i7 4-core and 16GB RAM. I turned Hyper-V off for this project.)
       - **OS:** Red Hat Linux (64-bit) v6.7
