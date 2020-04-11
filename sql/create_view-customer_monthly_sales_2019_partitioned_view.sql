@@ -1,7 +1,7 @@
 -- set global variables
 SET VAR:database_name=pied_piper_sales;
 
---create view customer_monthly_sales_2019_view on pied_piper_sales Data
+--create view customer_monthly_sales_2019_partitioned_view on pied_piper_sales Data
 
 --View: customer_monthly_sales_2019_partitioned_view
 --Customer id, customer last name, customer first name,
