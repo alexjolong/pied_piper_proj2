@@ -26,7 +26,13 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    3. `bash ./bash/deploy-proj2.sh --create_raw_tables`: Creates external table views around the files in HDFS which can be queried from Impala.
 - To clean deliverable 2, run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
    1. `bash ./bash/deploy-proj2.sh --do_deliverable_2`
-
+- To run deliverable 3, enter the command `bash ./bash/deploy-proj2.sh --create_partitions`, which will create the following partition tables and views in the impala-shell database `pied_piper_sales`:
+   1. `product_sales_partition`
+   2. `customer_monthly_sales_2019_partitioned_view`
+   3. `product_region_sales_partition`
+- To clean deliverable 3, if you are just wanting to drop all the partition tables/views, run the command `bash ./bash/deploy-proj2.sh --drop_partitions`. 
+   1. However, if you are doing a full data deletion and reload into the system, which includes deleting all the tables and views for deliverable 2 and deliverable 3, you can simply run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2` because `--clean_deliverable_2` drops the sales db which drops all the views and tables contained in the db. 
+   
 # Data Integrity
 We analyzed the raw sales data to discover any data cleanliness issues. Here are our findings:
 - One meta-issue with the defined schema in the assignment is that it requests a column in the Sales table named Date, which is a reserved keyword in Impala. A different name would be better, but we can work around it.
