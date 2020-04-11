@@ -37,7 +37,3 @@ c.customerid
 ,year(a.`date`)
 ,month(a.`date`);
 
-
--- reset metadata for view
-invalidate metadata;
-compute stats ${var:database_name}.customer_monthly_sales_2019_view;
