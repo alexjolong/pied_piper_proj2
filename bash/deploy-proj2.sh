@@ -121,9 +121,9 @@ drop_views() {
 
 drop_partitions() {
     echo "Dropping the partition tables and views from Deliverable 3"
-    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.product_sales_partition;"
+    impala-shell -q "Drop TABLE IF EXISTS pied_piper_sales.product_sales_partition;"
     impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.customer_monthly_sales_2019_partitioned_view;"
-    impala-shell -q "Drop VIEW IF EXISTS pied_piper_sales.product_region_sales_partition;"
+    impala-shell -q "Drop TABLE IF EXISTS pied_piper_sales.product_region_sales_partition;"
     echo "Done!"
 }
 
