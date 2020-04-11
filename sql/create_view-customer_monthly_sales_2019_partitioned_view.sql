@@ -26,3 +26,8 @@ GROUP BY
     ,c.firstname
     ,year(p.order_date)
     ,month(p.order_date);
+    
+    
+-- reset metadata for view
+invalidate metadata;
+compute stats ${var:database_name}.customer_monthly_sales_2019_partitioned_view;
