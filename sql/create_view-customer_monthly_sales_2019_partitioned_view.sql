@@ -27,6 +27,6 @@ GROUP BY
     p.customer_id
     ,c.lastname
     ,c.firstname
-    ,year(p.order_date)
-    ,month(p.order_date);
+    ,p.sales_year
+    ,p.sales_month;
     
