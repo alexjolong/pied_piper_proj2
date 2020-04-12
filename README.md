@@ -67,6 +67,30 @@ In addition, we noticed that some customers were making many very large orders. 
 Since these orders came in at different times and with separate order IDs, we have to assume they are valid. However, this could potentially be a problem with the order entry system allowing multiple entries of the same order (i.e. the user may have pressed "send" multiple times on the same order!). We would encourage our business partners to look into this.
 
 # Partitioning Performance
-TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
+When we compare the performance on the 2019 monthly sales view using partitioned and non-partitioned data, `customer_monthly_sales_2019_partitioned_view` versus `customer_monthly_sales_2019_view`, we see more efficient performance from the partitioned data than the non-partitioned view. 
 
-In our performance testing, we noticed our partitioned views consistently taking longer to perform queries against. This contradicts the typical understanding that partitioning would speed up our queries because they don't have to look for/load into memory nearly as much data. 
+We should mention that `customer_monthly_sales_2019_partitioned_view` is partitioned by year and month, which we get from the partitioned sales_year and sales_month from our partitioned table `product_sales_partition`. Our sql script that creates the partitioned monthly sales data view by joinning the partitioned table `product_sales_partition` and the table `customers`. The partitioned columns of sales_year and sales_month from `product_sales_partition` become the year and month variables in the partitioned view `customer_monthly_sales_2019_partitioned_view`. We are aware that having a partitioned year variable seems tedious for this particular view since it only focuses on 2019 data, but we felt necessary to keep it in for the case that this view could be modified in future steps to include more years. 
+
+To test the performance of the the 2019 monthly sales view using partitioned and non-partitioned data views, we ran several different impala-shell commandline queries that filtered based on the month variable (both views only have 2019 data, no point in using year). We would thing run the command `summary;` after each query call to help give us an overview of the timings for the different phases of execution for a query such as average time of aggregation execution, so we're looking at the breakdown of the total execution time of the query. 
+
+**One example** to show you our analysis of the performance of the 2019 monthly sales view using partitioned and non-partitioned data views is the following (under the database `pied_piper_sales`): 
+In the impala-commandline, we executed the following queries and commands where we looked for 2019 monthly sales data for only the first 6 months (months BETWEEN 1 AND 6) and limited the output to 10 (limit 10):
+
+**Partitioned: customer_monthly_sales_2019_partitioned_view Query calls and outputs**
+`select * from customer_monthly_sales_2019_partitioned_view where month BETWEEN 1 AND 6 limit 10;`
+`summary;`
+
+**Non-partitioned: customer_monthly_sales_2019_view Query calls and outputs**
+`select * from customer_monthly_sales_2019_view where month BETWEEN 1 AND 6 limit 10;`
+`summary;`
+
+As you see, not only did the partitioned data have quicker overall execution time and response than the non-partitioned data when executing the query, but all the different phases of execution for the query would be quicker and more responsive for partitioned data an overwhelmingly majority of cases. 
+
+**Overall**, the partitioned data view is quicker and more responsive than the non-partitioned view. We should note that the difference in the total time execution between these two queries sometimes varies, such as (Partitioned query vs Non-partitioned query)
+   - 1.05s versus 1.47s
+   - 2.34s versus 8.68s
+So it may be slightly dependent on the system or how the system is behaving at times. Regardless, every different run of these queries, the partitioned view query was always faster. 
+
+Our performance analysis bascially proves and shows that the partitions (year and month) are allowing Impala to skip the data in all partitions outside the specified range we used for year and month. Thus, leading to faster execution phases in the queries and getting faster results.  
+
+**THEREFORE**, we can assume that when it comes to data visualization purposes, we would expect the partitioned data view to be more responsive in giving us our desired insights and aggregations our data viz actions than the non-partitioned data view. In any data visualization tools, we are likely filtering the vis to display recent sales, or only care about monthly aggregates that can be computed as partition statistics without having to drill down. These partitioned columns will help reduce the effort in that filtering to make the vizualizations come out more quickly, likely more accurate, and even grab updates in the data quicker when partitions update or new data is added with those partitions compared to when data is not partitioned. 
