@@ -77,18 +77,24 @@ To test the performance of the the 2019 monthly sales view using partitioned and
 In the impala-commandline, we executed the following queries and commands where we looked for 2019 monthly sales data for only the first 6 months (months BETWEEN 1 AND 6) and limited the output to 10 (limit 10):
 
 **Partitioned: customer_monthly_sales_2019_partitioned_view Query calls and outputs**
+
 `select * from customer_monthly_sales_2019_partitioned_view where month BETWEEN 1 AND 6 limit 10;`
+
 `summary;`
 
 **Non-partitioned: customer_monthly_sales_2019_view Query calls and outputs**
+
 `select * from customer_monthly_sales_2019_view where month BETWEEN 1 AND 6 limit 10;`
+
 `summary;`
 
 As you see, not only did the partitioned data have quicker overall execution time and response than the non-partitioned data when executing the query, but all the different phases of execution for the query would be quicker and more responsive for partitioned data an overwhelmingly majority of cases. 
 
 **Overall**, the partitioned data view is quicker and more responsive than the non-partitioned view. We should note that the difference in the total time execution between these two queries sometimes varies, such as (Partitioned query vs Non-partitioned query)
+
    - 1.05s versus 1.47s
    - 2.34s versus 8.68s
+   
 So it may be slightly dependent on the system or how the system is behaving at times. Regardless, every different run of these queries, the partitioned view query was always faster. 
 
 Our performance analysis bascially proves and shows that the partitions (year and month) are allowing Impala to skip the data in all partitions outside the specified range we used for year and month. Thus, leading to faster execution phases in the queries and getting faster results.  
