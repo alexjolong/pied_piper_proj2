@@ -36,3 +36,4 @@ c.customerid
 ,c.firstname
 ,year(a.`date`)
 ,month(a.`date`);
+

@@ -9,7 +9,7 @@ SET VAR:database_name=pied_piper_sales;
 
 CREATE TABLE IF NOT EXISTS ${var:database_name}.product_region_sales_partition
 PARTITIONED BY (region, sales_year, sales_month) 
-COMMENT 'Impala Parquet product and sales materialized table that is partitioned by sales_year and sales_month'
+COMMENT 'Impala Parquet product and sales materialized table that is partitioned by region, sales_year, and sales_month'
 AS
 Select 
     s.orderid as order_id
@@ -32,6 +32,6 @@ ON (s.salespersonid = e.employeeid)
 ; --Create the table from the query statement here
 
 
-
+-- reset metadata for table
 invalidate metadata;
 compute stats ${var:database_name}.product_region_sales_partition;
