@@ -70,6 +70,3 @@ Since these orders came in at different times and with separate order IDs, we ha
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
 
 In our performance testing, we noticed our partitioned views consistently taking longer to perform queries against. This contradicts the typical understanding that partitioning would speed up our queries because they don't have to look for/load into memory nearly as much data. 
-
-Time to run non-partitioned view top 20 select: 17.69 seconds
-Time to run partitioned view top 20 select: 11.68 seconds
