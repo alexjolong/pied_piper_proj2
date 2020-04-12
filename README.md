@@ -104,3 +104,15 @@ So it may be slightly dependent on the system or how the system is behaving at t
 Our performance analysis bascially proves and shows that the partitions (year and month) are allowing Impala to skip the data in all partitions outside the specified range we used for year and month. Thus, leading to faster execution phases in the queries and getting faster results.  
 
 **THEREFORE**, we can assume that when it comes to data visualization purposes, we would expect the partitioned data view to be more responsive in giving us our desired insights and aggregations our data viz actions than the non-partitioned data view. In any data visualization tools, we are likely filtering the vis to display recent sales, or only care about monthly aggregates that can be computed as partition statistics without having to drill down. These partitioned columns will help reduce the effort in that filtering to make the vizualizations come out more quickly, likely more accurate, and even grab updates in the data quicker when partitions update or new data is added with those partitions compared to when data is not partitioned. 
+
+**SIDE NOTE observation**: When it came to creation of the partitioned and non-partitioned data views for the 2019 monthly sales data, the partitioned view took a little longer. However, as you can see from our observations above, it's still more worth it to have a partitioned date view than a non-partitioned data view, especially for data vizualization. 
+
+**Non-partition: customer_monthly_sales_2019_view**
+   - **Runtime creation**: Running the SQL script that creates this view takes about 0.02-7.90s. Creation run-time varies a lot and can be system dependent at times. 
+ 
+**Partition: customer_monthly_sales_2019_partitioned_view**
+   - NOTE: This partitioned view uses the partitioned table `product_sales_partition`, so we need to make sure that the partitioned table `product_sales_partition` is created.
+   - Creating `product_sales_partition` takes about 49.62s - 50.15s
+   - **However, Runtime creation** for just `customer_monthly_sales_2019_partitioned_view` is about 3.08s-9.20s. Creation run-time varies a lot and can be system dependent at times.
+
+Overall, the partitioned views may take a little longer to create, but it's really system dependent and it's still worth it to have a partitioned data view
