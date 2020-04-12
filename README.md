@@ -79,14 +79,18 @@ In the impala-commandline, we executed the following queries and commands where 
 **Partitioned: customer_monthly_sales_2019_partitioned_view Query calls and outputs**
 
 `select * from customer_monthly_sales_2019_partitioned_view where month BETWEEN 1 AND 6 limit 10;`
+![The query on partitioned data output and results](/documentation/partitioned-query-results-and-output.png)
 
 `summary;`
+![Summary of the partitioned data query above](/documentation/summary-of-partitioned-query.png)
 
 **Non-partitioned: customer_monthly_sales_2019_view Query calls and outputs**
 
 `select * from customer_monthly_sales_2019_view where month BETWEEN 1 AND 6 limit 10;`
+![The query on non-partitioned data output and results](/documentation/non-partitioned-query-results-and-output.png)
 
 `summary;`
+![Summary of the partitioned data query above](/documentation/summary-of-non-partitioned-query.png)
 
 As you see, not only did the partitioned data have quicker overall execution time and response than the non-partitioned data when executing the query, but all the different phases of execution for the query would be quicker and more responsive for partitioned data an overwhelmingly majority of cases. 
 
