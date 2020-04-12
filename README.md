@@ -65,3 +65,5 @@ Since these orders came in at different times and with separate order IDs, we ha
 
 # Partitioning Performance
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
+
+In our performance testing, we noticed our partitioned views consistently taking longer to perform queries against. 
