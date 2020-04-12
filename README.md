@@ -111,7 +111,7 @@ Our performance analysis bascially proves and shows that the partitions (year an
 **SIDE NOTE observation**: When it came to creation of the partitioned and non-partitioned data views for the 2019 monthly sales data, the partitioned view took a little longer. However, as you can see from our observations above, it's still more worth it to have a partitioned date view than a non-partitioned data view, especially for data vizualization. 
 
 **Non-partition: customer_monthly_sales_2019_view**
-   - **Runtime creation**: Running the SQL script that creates this view takes about 0.02-7.90s. Creation run-time varies a lot and can be system dependent at times. 
+   - **Runtime creation**: Running the SQL script that creates this view takes about 1.50-7.90s. Creation run-time varies a lot and can be system dependent at times. 
  
 **Partition: customer_monthly_sales_2019_partitioned_view**
    - NOTE: This partitioned view uses the partitioned table `product_sales_partition`, so we need to make sure that the partitioned table `product_sales_partition` is created.
