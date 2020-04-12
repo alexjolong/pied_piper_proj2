@@ -25,13 +25,16 @@ Repository for CSCI 5751 (Spring 2020) Project 2 - Hadoop
    2. `bash ./bash/deploy-proj2.sh --load_data`: Loads the data from Linux's ext4 file system to HDFS
    3. `bash ./bash/deploy-proj2.sh --create_raw_tables`: Creates external table views around the files in HDFS which can be queried from Impala.
 - **To clean deliverable 2**, run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2`. Alternatively, you can do each step in this process with individual commands:
-   1. `bash ./bash/deploy-proj2.sh --do_deliverable_2`
+   1. `bash ./bash/deploy-proj2.sh --drop_sales_database`
+   2. `bash ./bash/deploy-proj2.sh --drop_raw_database`
+   3. `bash ./bash/deploy-proj2.sh --delete_hdfs_raw_data`
 - **To run deliverable 3**, enter the command `bash ./bash/deploy-proj2.sh --create_partitions`, which will create the following partition tables and views in the impala-shell database `pied_piper_sales`:
    1. `product_sales_partition`
    2. `customer_monthly_sales_2019_partitioned_view`
    3. `product_region_sales_partition`
 - **To clean deliverable 3**, if you are just wanting to drop all the partition tables/views, run the command `bash ./bash/deploy-proj2.sh --drop_partitions`. 
    1. However, if you are doing a full data deletion and reload into the system, which includes deleting all the tables and views for deliverable 2 and deliverable 3, you can simply run the command `bash ./bash/deploy-proj2.sh --clean_deliverable_2` because `--clean_deliverable_2` drops the sales db which drops all the views and tables contained in the db. 
+- **To clean all data**, run the command `bash ./bash/deploy-proj-2.sh --clean_deliverable_2`
 - **Need help or need to look for specific function calls without having to look at the code?** Run the command `bash ./bash/deploy-proj2.sh -h` OR `bash ./bash/deploy-proj2.sh --help` to display the contents, function call options, and a short descriptions of each function call's purpose. 
    1. These will be helpful for you to see all function call options if you are desiring individual functon calls for certain operations without having to look within the code script itself
    
@@ -67,3 +70,6 @@ Since these orders came in at different times and with separate order IDs, we ha
 TODO: "Document your finding on the performance on the monthly sales view using partitioned and non-partitioned data. Explain the reasoning, which will be more responsive to data visualization?
 
 In our performance testing, we noticed our partitioned views consistently taking longer to perform queries against. This contradicts the typical understanding that partitioning would speed up our queries because they don't have to look for/load into memory nearly as much data. 
+
+Time to run non-partitioned view top 20 select: 17.69 seconds
+Time to run partitioned view top 20 select: 11.68 seconds
